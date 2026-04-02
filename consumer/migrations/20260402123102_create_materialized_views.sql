@@ -18,10 +18,10 @@ AS
 SELECT
     toStartOfHour(window_start) AS window_start,
     page_id,
-    sumMerge(view_count) AS view_count,
-    toFloat32(sumMerge(total_duration) / sumMerge(view_count)) AS avg_duration,
-    uniqMerge(unique_users) AS unique_users,
-    toFloat32(sumMerge(bounce_count) * 100.0 / sumMerge(view_count)) AS bounce_rate
+    sumMergeState(view_count) AS view_count,
+    sumMergeState(total_duration) AS total_duration,
+    uniqMergeState(unique_users) AS unique_users,
+    sumMergeState(bounce_count) AS bounce_count
 FROM page_views_agg_minute
 GROUP BY window_start, page_id;
 
