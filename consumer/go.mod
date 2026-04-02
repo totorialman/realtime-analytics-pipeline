@@ -4,7 +4,9 @@ go 1.26.1
 
 require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.44.0
+	github.com/gorilla/mux v1.8.1
 	github.com/segmentio/kafka-go v0.4.50
+	github.com/totorialman/realtime-analytics-pipeline/shared v0.0.0-20260402182456-3a0d976486d3
 )
 
 require (
