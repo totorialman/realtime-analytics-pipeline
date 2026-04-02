@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	service := app.NewService(cfg, reader, repo, metrics)
+	service := service.NewService(cfg, reader, repo, metrics)
 
 	go func() {
 		log.Fatal(service.Run(context.Background()))
