@@ -9,7 +9,7 @@ import (
 	kafkaGo "github.com/segmentio/kafka-go"
 	"github.com/totorialman/realtime-analytics-pipeline/producer/internal/config"
 	"github.com/totorialman/realtime-analytics-pipeline/producer/internal/domain"
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 type Writer struct {

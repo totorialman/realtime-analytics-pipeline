@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 type Generator struct {

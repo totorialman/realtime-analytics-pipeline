@@ -7,20 +7,20 @@ import (
 
 	"github.com/totorialman/realtime-analytics-pipeline/producer/internal/config"
 	"github.com/totorialman/realtime-analytics-pipeline/producer/internal/domain"
-	kafkainfra "github.com/totorialman/realtime-analytics-pipeline/producer/internal/infra/kafka"
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/producer/internal/repo/kafka"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 type Service struct {
 	cfg       config.Config
 	state     *domain.RuntimeState
 	metrics   *domain.Metrics
-	writer    *kafkainfra.Writer
+	writer    *kafka.Writer
 	generator *domain.Generator
 	batcher   *domain.Batcher
 }
 
-func NewService(cfg config.Config, state *domain.RuntimeState, metrics *domain.Metrics, writer *kafkainfra.Writer) *Service {
+func NewService(cfg config.Config, state *domain.RuntimeState, metrics *domain.Metrics, writer *kafka.Writer) *Service {
 	s := &Service{
 		cfg:       cfg,
 		state:     state,
