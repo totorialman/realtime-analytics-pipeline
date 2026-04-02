@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 func Validate(raw []byte, offset int64, partition int32) (ValidatedEvent, error) {

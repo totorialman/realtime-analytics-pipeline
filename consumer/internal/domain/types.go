@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 type Metrics struct {

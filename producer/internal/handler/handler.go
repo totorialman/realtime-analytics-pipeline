@@ -40,7 +40,7 @@ func NewHandler(service *service.Service, metrics *domain.Metrics) http.Handler 
 		})
 	}).Methods("GET")
 
-	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	}).Methods("GET")
 

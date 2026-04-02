@@ -9,7 +9,7 @@ import (
 	ch "github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/totorialman/realtime-analytics-pipeline/consumer/internal/config"
 	"github.com/totorialman/realtime-analytics-pipeline/consumer/internal/domain"
-	shared "github.com/totorialman/realtime-analytics-pipeline/shared"
+	"github.com/totorialman/realtime-analytics-pipeline/shared"
 )
 
 type Repository struct {
