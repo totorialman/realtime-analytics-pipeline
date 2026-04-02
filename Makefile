@@ -1,21 +1,18 @@
-.PHONY: start stop logs
+.PHONY: up down logs migrate
 
-CLICKHOUSE_HOST = localhost
-CLICKHOUSE_PORT = 9000
-CLICKHOUSE_DB = default
-CLICKHOUSE_USER = default
-CLICKHOUSE_PASSWORD =
-CLICKHOUSE_DSN = tcp://$(CLICKHOUSE_HOST):$(CLICKHOUSE_PORT)
+CLICKHOUSE_DSN=tcp://localhost:9000
 
-start:
-	docker-compose up -d clickhouse kafka zookeeper
-	@until curl -s http://localhost:8123/ping > /dev/null 2>&1; do sleep 1; done
+up:
+	docker compose up -d zookeeper kafka clickhouse
+	until curl -s http://localhost:8123/ping >/dev/null 2>&1; do sleep 1; done
 	goose -dir consumer/migrations clickhouse "$(CLICKHOUSE_DSN)" up
-	docker-compose up -d producer consumer
+	docker compose up -d producer consumer
 
-stop:
-	@echo "🛑 Остановка..."
-	docker-compose down
+down:
+	docker compose down -v
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
+
+migrate:
+	goose -dir consumer/migrations clickhouse "$(CLICKHOUSE_DSN)" up

@@ -1,21 +1,21 @@
-FROM golang:1.25.7-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /src
 
-COPY gw-currency-wallet/go.mod gw-currency-wallet/go.sum ./gw-currency-wallet/
-COPY . .
+COPY go.work .
+COPY shared/go.mod shared/go.mod
+COPY consumer/go.mod consumer/go.mod
+COPY shared shared
+COPY consumer consumer
 
-WORKDIR /src/gw-currency-wallet
+WORKDIR /src/consumer
 RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/consumer ./cmd/main.go
 
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o /app/wallet ./cmd/main.go
-
-FROM alpine
-COPY --from=builder /app/wallet /app/wallet
-
+FROM alpine:3.20
 WORKDIR /app
-COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /
-ENV TZ="Europe/Moscow"
+COPY --from=builder /app/consumer /app/consumer
+COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /zoneinfo.zip
 ENV ZONEINFO=/zoneinfo.zip
-EXPOSE 8080
-ENTRYPOINT ["/app/wallet"]
+EXPOSE 8081
+ENTRYPOINT ["/app/consumer"]

@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-// PageViewEvent представляет событие просмотра страницы
 type PageViewEvent struct {
 	PageID       string    `json:"page_id"`
 	UserID       string    `json:"user_id"`
@@ -17,40 +16,41 @@ type PageViewEvent struct {
 	IsBounce     bool      `json:"is_bounce"`
 }
 
-// ToJSON сериализует событие в JSON
-func (e *PageViewEvent) ToJSON() ([]byte, error) {
+func (e PageViewEvent) ToJSON() ([]byte, error) {
 	return json.Marshal(e)
 }
 
-// PageViewEventFromJSON десериализует событие из JSON
-func PageViewEventFromJSON(data []byte) (*PageViewEvent, error) {
+func PageViewEventFromJSON(data []byte) (PageViewEvent, error) {
 	var event PageViewEvent
 	err := json.Unmarshal(data, &event)
-	return &event, err
+	return event, err
 }
 
-// GenerationMode определяет режим генерации событий
-type GenerationMode int
+type GenerationMode string
 
 const (
-	ModeRegular GenerationMode = iota
-	ModeBurst
-	ModeNight
+	ModeRegular GenerationMode = "regular"
+	ModeBurst   GenerationMode = "burst"
+	ModeNight   GenerationMode = "night"
 )
 
-// PartitionStrategy определяет стратегию партиционирования
-type PartitionStrategy int
+type SendMode string
 
 const (
-	PartitionByKey PartitionStrategy = iota
-	PartitionRoundRobin
-	PartitionRandom
+	SendModeSync  SendMode = "sync"
+	SendModeAsync SendMode = "async"
+	SendModeBatch SendMode = "batch"
 )
 
-// Константы для работы с Kafka
+type PartitionStrategy string
+
+const (
+	PartitionByKey      PartitionStrategy = "key"
+	PartitionRoundRobin PartitionStrategy = "round_robin"
+	PartitionRandom     PartitionStrategy = "random"
+)
+
 const (
 	TopicPageViews = "page_views"
 	MaxRetries     = 5
-	InitialBackoff = 100 * time.Millisecond
-	MaxBackoff     = 10 * time.Second
 )
